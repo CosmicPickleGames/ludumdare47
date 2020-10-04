@@ -172,6 +172,7 @@ GameObject:
   - component: {fileID: 3914524437708117092}
   - component: {fileID: 2071990531}
   - component: {fileID: 5299625881455892174}
+  - component: {fileID: 395147176}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -245,7 +246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: -70
-  numGroundRays: 5
+  numGroundRays: 15
   groundRayLength: 0.1
   groundMask:
     serializedVersion: 2
@@ -264,6 +265,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 10
+  moveSFX: {fileID: 8300000, guid: beb24b8a43b9cfb47882df3d15c34d47, type: 3}
+  moveVolume: 0.1
 --- !u!114 &9068256257840862960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,6 +282,8 @@ MonoBehaviour:
   minJumpHeight: 1
   maxJumpHeight: 7
   numAirJumps: 0
+  jumpSFX: {fileID: 8300000, guid: 7bdec8af81c54254b9aee2a6d82d6c8f, type: 3}
+  jumpVolume: 0.3
 --- !u!114 &9068256257840862963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,7 +291,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9068256257840862971}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d2776ad281b4fbd4eb2d0cf1f3f1c2b1, type: 3}
   m_Name: 
@@ -294,7 +299,9 @@ MonoBehaviour:
   distance: 15
   duration: 0.4
   lostControlDuration: 0.2
-  numAirDashes: 1
+  numAirDashes: 0
+  dashSFX: {fileID: 8300000, guid: 58fa1b20b0eb75e4aa549ad5ab561ac1, type: 3}
+  dashVolume: 1
 --- !u!114 &3914524437708117092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,6 +345,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48f93c160c634e84e81719e97a27d9aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 2
+  maxHealth: 1
   invulnerableDuration: 0.3
   destroyOnDeath: 0
+  deathSFX: {fileID: 8300000, guid: 14e8ea14645335d4d93a517d9ae530fb, type: 3}
+  deathVolume: 0.1
+  deathVFX: {fileID: 8545851342178183813, guid: f52697e51fb9add43a070a3d4a959523,
+    type: 3}
+--- !u!114 &395147176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9068256257840862971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8abe9b8c562f82445901afa14fdc2175, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

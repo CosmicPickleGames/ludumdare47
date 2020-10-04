@@ -151,7 +151,7 @@ public class Controller2D : MonoBehaviour
         {
             Vector2 origin = rayBaseOrigin + Vector2.right * raySpacing * i;
             RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.up * gravitySign, groundRayLength, groundMask);
-            if (hit.collider)
+            if (hit.collider && !hit.collider.isTrigger)
             {
                 Grounded = true;
                 Ground = hit.collider;

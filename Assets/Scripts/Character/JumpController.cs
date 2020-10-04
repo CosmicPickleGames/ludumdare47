@@ -12,6 +12,10 @@ public class JumpController : MonoBehaviour
     protected float maxJumpForce;
     protected float minJumpForce;
 
+    [Header("Effects")]
+    public AudioClip jumpSFX;
+    public float jumpVolume = .3f;
+
     private Controller2D controller;
 
     public bool CanJump
@@ -37,8 +41,15 @@ public class JumpController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (UIMenu.Instance.MenuOpen)
+        {
+            return;
+        }
+
         if (Input.GetButtonDown("Jump") && CanJump)
         {
+            AudioManager.Instance.PlaySound(jumpSFX, transform.position, transform, false, jumpVolume);
+
             if (!controller.Grounded)
             {
                 //We are in the air
@@ -52,6 +63,7 @@ public class JumpController : MonoBehaviour
         if (Input.GetButtonUp("Jump"))
         {
             controller.StopJump(maxJumpForce - minJumpForce);
+            
         }
     }
 

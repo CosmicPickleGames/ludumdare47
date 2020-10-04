@@ -41,11 +41,19 @@ public class LevelController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        Application.targetFrameRate = 60;
+        QualitySettings.vSyncCount = 0;
+
+        SaveLoadManager.Instance.Init();
+        InventoryManager.Instance.Init();
+        
         Player = Instantiate(playerPrefab);
         playerLayerMask |= (1 << Player.gameObject.layer);
 
         SetPlayerEntryPosition();
         Player.Health.onDeath += Respawn;
+
+        UnlocksManager.Instance.Init();
     }
 
     // Update is called once per frame
@@ -80,8 +88,9 @@ public class LevelController : MonoBehaviour
 
     private void SetPlayerEntryPosition()
     {
-        TransitionDirection direction = PlayerPrefs.HasKey("LastExitDirection") 
-            ? (TransitionDirection) (-PlayerPrefs.GetInt("LastExitDirection")) 
+        int lastExitDirection = SaveLoadManager.Instance.Data.LastExitDirection;
+        TransitionDirection direction = lastExitDirection != 0
+            ? (TransitionDirection) (-lastExitDirection)
             : defaultTransitionDirection;
 
         _enterTransition = transitions.Find(t => t.direction == direction);
@@ -124,8 +133,13 @@ public class LevelController : MonoBehaviour
     {
         playerEntryInProgress = true;
         Player.Controller.LockVelocity = true;
-        PlayerPrefs.SetInt("LastExitDirection", (int)transition.direction);
-        PlayerPrefs.Save();
+
+        if(transition.direction == TransitionDirection.Up)
+        {
+            Player.Controller.gravity = 0;
+        }
+        SaveLoadManager.Instance.Data.LastExitDirection = (int)transition.direction;
+        SaveLoadManager.Instance.Save();
 
         yield return fader.FadeOut();
         SceneManager.LoadScene(transition.scene, LoadSceneMode.Single);

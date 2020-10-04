@@ -8,6 +8,10 @@ public class DashController : MonoBehaviour
     public float lostControlDuration = .15f;
     public int numAirDashes;
 
+    [Header("Effects")]
+    public AudioClip dashSFX;
+    public float dashVolume = .3f;
+
     public bool CanDash
     {
         get => !_dashing && (controller.Grounded || _numAirDashesRemaining > 0);
@@ -26,8 +30,14 @@ public class DashController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetButtonDown("Dash") && CanDash)
+        if (UIMenu.Instance.MenuOpen)
         {
+            return;
+        }
+
+        if (Input.GetButtonDown("Dash") && CanDash)
+        {
+            AudioManager.Instance.PlaySound(dashSFX, transform.position, transform, false, dashVolume);
             StartCoroutine(DashCrt(Vector2.zero));
         }
     }
